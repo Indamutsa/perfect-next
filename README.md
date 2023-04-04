@@ -1,5 +1,7 @@
 # A demo portfolio site -- tutorial
 
+From Hosna Qasmei : https://github.com/hqasmei
+
 Let us create a folder for our project and then create a next app with typescript
 
 ```
