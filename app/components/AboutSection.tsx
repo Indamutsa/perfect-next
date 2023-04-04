@@ -33,7 +33,7 @@ const AboutSection = () => {
                     {/* This is the description for the about section */}
                     <div className="md:w-1/2 ">
                         <h1 className="text-center text-2xl font-bold mb-6 md:text-left">
-                            Get to know me!
+                            Get in Touch!
                         </h1>
                         <p>
                             Hello, my name is Arsene.
