@@ -43,7 +43,7 @@ const AboutSection = () => {
                         </p>
                         <br />
                         <p>
-                            I earned a PhD in Information Engineering and Sciences from the University of L'Aquila, and also hold a Master of Science in Information Technology from Carnegie Mellon University.
+                            I earned a PhD in Information Engineering and Sciences from the University of L&apos;Aquila, and also hold a Master of Science in Information Technology from Carnegie Mellon University.
                         </p>
                         <br />
                         <p>
@@ -54,7 +54,7 @@ const AboutSection = () => {
                             Driven by my passion for technology, I believe in
                             <span className="font-bold text-teal-500">
                                 continuous growth, thinking out-of-box and pushing boundaries.
-                            </span> Open to new opportunities and challenges, I'm excited to explore where my career takes me. With a commitment to excellence and hunger for progress, I'm confident in making meaningful contributions to organizations that value innovation and growth. 🙂
+                            </span> Open to new opportunities and challenges, I amm excited to explore where my career takes me. With a commitment to excellence and hunger for progress, I am confident in making meaningful contributions to organizations that value innovation and growth. 🙂
                         </p>
                     </div>
 

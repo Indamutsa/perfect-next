@@ -198,8 +198,26 @@ Install the vercel cli
 yarn global add vercel
 ```
 
-Check the version of vercel \
+Check the version of vercel
 
 ```
 vercel --version
 ```
+
+Login to vercel
+
+```
+vercel login
+```
+
+Let us deploy our app
+
+```
+vercel
+```
+
+and then follow the instructions.
+
+---
+
+You can also easily deploy the app by adding a new project in vercel and then linking the github repo to the vercel project.
