@@ -221,3 +221,5 @@ and then follow the instructions.
 ---
 
 You can also easily deploy the app by adding a new project in vercel and then linking the github repo to the vercel project.
+
+END
