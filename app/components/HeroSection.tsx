@@ -28,10 +28,10 @@ const HeroSection = () => {
                     <p className="text-lg mt-4 mb-6 md:text-2xl">
                         I&#39;m a{" "}
                         <span className="font-semibold text-teal-600">
-                            Software Engineer{" "}
+                            Research Engineer{" "}
                         </span>
                         based in Madrid, Spain. Working towards building software tools and products that
-                        make a remarkable difference and spice our daily boring lives. 🚀 🚀
+                        make a remarkable difference and spice our daily lives. 🚀 🚀
                     </p>
 
                     {/* This is the button for the portfolio */}

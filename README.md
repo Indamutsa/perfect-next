@@ -137,3 +137,87 @@ Let us add the secrets to the repo
 gh secret set DOCKER_USERNAME
 gh secret set DOCKER_PASSWORD
 ```
+
+To enable docker development,
+
+Let us prepare a react next js dockerfile:
+
+```
+cat > Dockerfile
+    # dev.Dockerfile for development
+
+    FROM node:18-alpine
+
+    WORKDIR /work
+
+    RUN apk add zsh git vim nano \
+        && sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+
+    COPY startup.sh /usr/local/bin/
+
+    # Set the executable permission on the script
+    RUN chmod +x /usr/local/bin/startup.sh
+
+    # Run the startup script when the container starts
+    CMD ["/usr/local/bin/startup.sh"]
+```
+
+Let us create a startup script
+
+```
+    cat > startup.sh
+    chown 1000:root -R /work
+```
+
+We need to build the image and run the container
+
+```
+docker build -t nextjs .
+docker run -it -p 3000:3000 -v $(pwd):/work nextjs
+```
+
+I developed a script that help me create a new project of nextjs or react with docker
+
+```
+run-next
+```
+
+The content is as follows:
+
+```
+docker run -it -p 3000:3000 -v ${PWD}:/work -w /work indamutsa/next-image:1.0.5 zsh
+```
+
+### Deployment
+
+We are going to deploy our app to vercel
+
+Install the vercel cli
+
+```
+yarn global add vercel
+```
+
+Check the version of vercel
+
+```
+vercel --version
+```
+
+Login to vercel
+
+```
+vercel login
+```
+
+Let us deploy our app
+
+```
+vercel
+```
+
+and then follow the instructions.
+
+---
+
+You can also easily deploy the app by adding a new project in vercel and then linking the github repo to the vercel project.
