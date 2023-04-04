@@ -1,38 +1,139 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# A demo portfolio site -- tutorial
 
-## Getting Started
+From Hosna Qasmei : https://github.com/hqasmei
 
-First, run the development server:
+Let us create a folder for our project and then create a next app with typescript
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+```
+mkdir perfect-next
+cd perfect-next
+# Start the vscode editor
+code .
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Create a repo using github cli
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+git init
+gh repo create
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Let us a dockerfile for our project
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```
+cat > Dockerfile
+    # Paste the following content
+    # dev.Dockerfile for development
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+    FROM node:18-alpine
 
-## Learn More
+    WORKDIR /app
 
-To learn more about Next.js, take a look at the following resources:
+    # Install dependencies based on the preferred package manager
+    COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+    RUN \
+        if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+        elif [ -f package-lock.json ]; then npm ci; \
+        elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i; \
+        else echo "Lockfile not found." && exit 1; \
+        fi
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    COPY . .
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+    CMD yarn dev
+```
 
-## Deploy on Vercel
+Let us create the next app
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+yarn create next-app . --typescript --eslint
+yarn add tailwindcss postcss autoprefixer
+yarn add -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+yarn dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Add the following to the `tailwind.config.js` file
+
+```
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx}",
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+
+    // Or if using `src` directory:
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  darkMode: 'class',
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
+
+Let us add some dependencies
+
+```
+yarn add react-scroll
+yarn add next-themes
+yarn add react-icons
+yarn add --save-dev @types/react-scroll
+yarn add -D @types/react-scroll
+```
+
+Let us push the current changes to the repo
+
+```
+git push --set-upstream origin master
+p.sh "Creating a demo portfolio -- navbar done"
+```
+
+Let us create a working branch
+
+```
+git checkout -b dev
+git push --set-upstream origin dev
+p.sh "working dir in dev"
+```
+
+Let us create git actions for our project
+
+```
+cat > .github/workflows/main.yml
+    name: Build and push Docker image
+    on:
+    push:
+        branches:
+        - dev
+    jobs:
+    build-and-push:
+        runs-on: ubuntu-latest
+        env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        IMAGE_NAME: my-app
+        steps:
+        - name: Checkout code
+            uses: actions/checkout@v2
+        - name: Login to Docker Hub
+            uses: docker/login-action@v1
+            with:
+            username: ${{ env.DOCKER_USERNAME }}
+            password: ${{ env.DOCKER_PASSWORD }}
+        - name: Build and push Docker image
+            uses: docker/build-push-action@v2
+            with:
+            context: .
+            push: true
+            tags: ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+```
+
+Let us add the secrets to the repo
+
+```
+gh secret set DOCKER_USERNAME
+gh secret set DOCKER_PASSWORD
+```
